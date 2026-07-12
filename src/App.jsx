@@ -15,33 +15,33 @@ const App = () => {
   return (
     <div>
       <InkCanvas isHome={currentTab === 'home'} />
-      
+
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
       <main className="content-section">
         {currentTab === 'home' && (
           <div className="fade-in">
-             <Hero />
+            <Hero />
           </div>
         )}
         {currentTab === 'experience' && (
           <div className="fade-in">
-             <Experience />
+            <Experience />
           </div>
         )}
         {currentTab === 'projects' && (
           <div className="fade-in">
-             <Projects />
+            <Projects />
           </div>
         )}
         {currentTab === 'skills' && (
           <div className="fade-in">
-             <Skills />
+            <Skills />
           </div>
         )}
         {currentTab === 'funfacts' && (
           <div className="fade-in">
-             <FunFacts />
+            <FunFacts />
           </div>
         )}
       </main>
