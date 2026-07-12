@@ -1,25 +1,24 @@
-import React from 'react';
 import { Mail, FileText } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 
 const Hero = () => {
   return (
-    <section className="hero" style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', minHeight: 'calc(100vh - 160px)', borderBottom: 'none' }}>
+    <section className="hero-section">
       <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
-        <div style={{ maxWidth: '700px', marginRight: 'auto', marginLeft: '0', textAlign: 'left' }}>
-          <h1 style={{ fontSize: 'clamp(3.5rem, 8vw, 6rem)', marginBottom: '0.5rem', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', fontWeight: '700', letterSpacing: '-1px' }}>
+        <div className="hero-content">
+          <h1 className="hero-name">
             Mateo Viteri
           </h1>
-          <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontFamily: 'var(--font-subheading)', color: 'var(--text-secondary)', marginBottom: '2rem', fontWeight: '700' }}>
+          <h2 className="hero-subtitle">
             CS Student &amp; Software Engineer
           </h2>
-          <div style={{ fontSize: '1.05rem', color: 'var(--text-secondary)', marginBottom: '2.5rem', lineHeight: '1.7' }}>
+          <div className="hero-description">
             <p>
               I&apos;m a Computer Science student at the University of Illinois Chicago (Class of 2027). I&apos;ve always been fascinated by how software impacts our daily lives, and now I focus on building programs that solve real problems. I enjoy working in fast-paced environments, learning new tech, and pushing myself to improve everyday!
             </p>
           </div>
 
-          <div className="flex gap-4" style={{ flexWrap: 'wrap', marginTop: '2.5rem' }}>
+          <div className="hero-actions">
             <a href="/Mateo_Viteri_Resume.pdf" target="_blank" rel="noreferrer" className="btn btn-primary">
               <FileText size={18} /> Resume
             </a>

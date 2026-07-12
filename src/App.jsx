@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import './index.css';
+import { useState } from 'react';
 
 import Navbar from './components/Navbar';
 import InkCanvas from './components/InkCanvas';
@@ -9,8 +8,18 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import FunFacts from './components/FunFacts';
 
+const TABS = {
+  home: Hero,
+  experience: Experience,
+  projects: Projects,
+  skills: Skills,
+  funfacts: FunFacts,
+};
+
 const App = () => {
   const [currentTab, setCurrentTab] = useState('home');
+
+  const TabContent = TABS[currentTab];
 
   return (
     <div>
@@ -19,35 +28,15 @@ const App = () => {
       <Navbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
 
       <main className="content-section">
-        {currentTab === 'home' && (
-          <div className="fade-in">
-            <Hero />
-          </div>
-        )}
-        {currentTab === 'experience' && (
-          <div className="fade-in">
-            <Experience />
-          </div>
-        )}
-        {currentTab === 'projects' && (
-          <div className="fade-in">
-            <Projects />
-          </div>
-        )}
-        {currentTab === 'skills' && (
-          <div className="fade-in">
-            <Skills />
-          </div>
-        )}
-        {currentTab === 'funfacts' && (
-          <div className="fade-in">
-            <FunFacts />
+        {TabContent && (
+          <div className="fade-in" key={currentTab}>
+            <TabContent />
           </div>
         )}
       </main>
 
       {currentTab !== 'home' && (
-        <footer className="fade-in" style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--text-secondary)', borderTop: '2px solid rgba(255, 255, 255, 0.1)', fontSize: '0.85rem', fontFamily: 'var(--font-mono)' }}>
+        <footer className="fade-in site-footer">
           <p>Thanks for visiting my website!</p>
         </footer>
       )}

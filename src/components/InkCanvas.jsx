@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const InkCanvas = ({ isHome }) => {
   const canvasRef = useRef(null);
   const hintRef = useRef(null);
   const isHomeRef = useRef(isHome);
+  const [hasClicked, setHasClicked] = useState(false);
 
   useEffect(() => {
     isHomeRef.current = isHome;
@@ -20,7 +21,7 @@ const InkCanvas = ({ isHome }) => {
     let height = (canvas.height = window.innerHeight);
     
     const getBaseX = () => isHomeRef.current ? (width < 768 ? width * 0.5 : width * 0.75) : width * 0.5;
-    const getBaseY = () => isHomeRef.current ? (width < 768 ? height * 0.75 : height / 2) : height / 2;
+    const getBaseY = () => isHomeRef.current ? (width < 768 ? height - 230 : height / 2) : height / 2;
 
     const initialBaseX = getBaseX();
     let mouseX = initialBaseX;
@@ -146,6 +147,7 @@ const InkCanvas = ({ isHome }) => {
 
       draw(c) {
         c.save();
+        
         c.fillStyle = '#ffffff';
         c.strokeStyle = '#ffffff';
 
@@ -236,19 +238,39 @@ const InkCanvas = ({ isHome }) => {
       }
     };
 
+    /** Burst the hint text with an ink splatter animation */
+    const burstHintText = () => {
+      if (!hintRef.current) return;
+      const innerText = hintRef.current.querySelector('.hint-inner');
+      if (!innerText || innerText.classList.contains('droplet-burst-animation')) return;
+
+      innerText.classList.add('droplet-burst-animation');
+      setTimeout(() => setHasClicked(true), 350);
+      
+      const yOffset = width < 768 ? 200 : height * 0.35;
+      const textY = cat.y + yOffset;
+      for (let i = 0; i < 14; i++) {
+        const drop = new InkDrop(cat.x, textY, 0, 0);
+        drop.type = 0;
+        drop.length = Math.random() * 4 + 2;
+        drop.thickness = Math.random() * 1 + 0.5;
+        drop.opacity = 1;
+        drop.vx *= 1.8;
+        drop.vy *= 1.8;
+        drop.decay = Math.random() * 0.1 + 0.05;
+        particles.push(drop);
+      }
+    };
+
     const handleClick = (e) => {
       cat.swipe(e.clientX, e.clientY);
-      if (hintRef.current) {
-        hintRef.current.style.display = 'none';
-      }
+      burstHintText();
     };
 
     const handleTouchStart = (e) => {
       if (e.touches.length > 0) {
         cat.swipe(e.touches[0].clientX, e.touches[0].clientY);
-        if (hintRef.current) {
-          hintRef.current.style.display = 'none';
-        }
+        burstHintText();
       }
     };
 
@@ -277,6 +299,13 @@ const InkCanvas = ({ isHome }) => {
         p.update();
         p.draw(ctx);
       });
+      
+      if (hintRef.current) {
+        const yOffset = width < 768 ? 200 : height * 0.35;
+        hintRef.current.style.left = `${cat.x}px`;
+        hintRef.current.style.top = `${cat.y + yOffset}px`;
+      }
+      
       animationFrameId = requestAnimationFrame(animate);
     };
 
@@ -308,15 +337,21 @@ const InkCanvas = ({ isHome }) => {
           transition: 'opacity 0.8s ease'
         }}
       />
-      {isHome && (
-        <div ref={hintRef} className="hint-text hint-layout" style={{
-          color: 'var(--text-secondary)',
-          fontFamily: 'var(--font-mono)',
-          fontSize: '0.9rem',
-          pointerEvents: 'none',
-          zIndex: 10
+      {!hasClicked && isHome && (
+        <div ref={hintRef} style={{
+          position: 'fixed',
+          transform: 'translate(-50%, -50%)',
+          zIndex: 10,
+          pointerEvents: 'none'
         }}>
-          [ Click anywhere to interact ]
+          <div className="hint-inner hint-text" style={{
+            color: 'var(--text-secondary)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: 'clamp(0.8rem, 2vw, 1rem)',
+            whiteSpace: 'nowrap'
+          }}>
+            [ Click anywhere to interact ]
+          </div>
         </div>
       )}
     </>
