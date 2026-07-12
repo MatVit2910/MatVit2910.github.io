@@ -57,13 +57,13 @@ const Experience = () => {
       <h2 className="section-title">
         <Briefcase style={{display:'inline', verticalAlign:'bottom', marginRight:'10px', color: 'var(--text-primary)'}}/> Experience
       </h2>
-      <div style={{ position: 'relative', maxWidth: '800px', margin: '0 auto', paddingLeft: '2.5rem' }}>
-        <div style={{ position: 'absolute', left: '7px', top: '10px', bottom: '10px', width: '2px', background: 'rgba(255, 255, 255, 0.1)', filter: 'url(#rough-edge)' }}></div>
+      <div className="experience-timeline">
+        <div className="experience-timeline-line" style={{ position: 'absolute', left: '7px', top: '10px', bottom: '10px', width: '2px', background: 'rgba(255, 255, 255, 0.1)', filter: 'url(#rough-edge)' }}></div>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
           {experiences.map((exp, idx) => (
             <div key={idx} style={{ position: 'relative' }}>
-              <div style={{ 
+              <div className="experience-timeline-dot" style={{ 
                 position: 'absolute', 
                 left: '-2.5rem', 
                 marginLeft: '-6px', 

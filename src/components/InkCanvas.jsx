@@ -18,9 +18,13 @@ const InkCanvas = ({ isHome }) => {
     let animationFrameId;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
-    const initialBaseX = isHomeRef.current ? width * 0.75 : width * 0.5;
+    
+    const getBaseX = () => isHomeRef.current ? (width < 768 ? width * 0.5 : width * 0.75) : width * 0.5;
+    const getBaseY = () => isHomeRef.current ? (width < 768 ? height * 0.75 : height / 2) : height / 2;
+
+    const initialBaseX = getBaseX();
     let mouseX = initialBaseX;
-    let mouseY = height / 2;
+    let mouseY = getBaseY();
 
     class InkDrop {
       constructor(x, y, swipeDx = 0, swipeDy = 0) {
@@ -112,9 +116,10 @@ const InkCanvas = ({ isHome }) => {
       }
 
       update() {
-        const baseX = isHomeRef.current ? width * 0.75 : width * 0.5;
+        const baseX = getBaseX();
+        const baseY = getBaseY();
         const targetBodyX = baseX + (mouseX - baseX) * 0.04;
-        const targetBodyY = height / 2 + (mouseY - height / 2) * 0.04;
+        const targetBodyY = baseY + (mouseY - baseY) * 0.04;
         this.x += (targetBodyX - this.x) * 0.05;
         this.y += (targetBodyY - this.y) * 0.05;
 
@@ -224,6 +229,13 @@ const InkCanvas = ({ isHome }) => {
       mouseY = e.clientY;
     };
 
+    const handleTouchMove = (e) => {
+      if (e.touches.length > 0) {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      }
+    };
+
     const handleClick = (e) => {
       cat.swipe(e.clientX, e.clientY);
       if (hintRef.current) {
@@ -231,15 +243,26 @@ const InkCanvas = ({ isHome }) => {
       }
     };
 
+    const handleTouchStart = (e) => {
+      if (e.touches.length > 0) {
+        cat.swipe(e.touches[0].clientX, e.touches[0].clientY);
+        if (hintRef.current) {
+          hintRef.current.style.display = 'none';
+        }
+      }
+    };
+
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      cat.x = isHomeRef.current ? width * 0.75 : width * 0.5;
-      cat.y = height / 2;
+      cat.x = getBaseX();
+      cat.y = getBaseY();
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('click', handleClick);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
     window.addEventListener('resize', handleResize);
 
     const animate = () => {
@@ -261,7 +284,9 @@ const InkCanvas = ({ isHome }) => {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('click', handleClick);
+      window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
     };
@@ -284,11 +309,7 @@ const InkCanvas = ({ isHome }) => {
         }}
       />
       {isHome && (
-        <div ref={hintRef} className="hint-text" style={{
-          position: 'fixed',
-          bottom: '15%',
-          right: '25%',
-          transform: 'translateX(50%)',
+        <div ref={hintRef} className="hint-text hint-layout" style={{
           color: 'var(--text-secondary)',
           fontFamily: 'var(--font-mono)',
           fontSize: '0.9rem',
