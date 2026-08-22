@@ -8,7 +8,7 @@ const experiences = [
     location: "Chicago, IL",
     description: [
       "Developed a multi-agent observability system using Python and Amazon Bedrock, designing an orchestrator architecture that intelligently routes complex system queries to specialized sub-agents.",
-      "Integrated Model Context Protocol (MCP) to connect deployed agents with enterprise telemetry and version control systems, implementing a localized RAG workflow utilizing embedding models to retrieve diagnostic data from a vector store for automated error resolution.",
+      "Integrated Model Context Protocol (MCP) to connect deployed agents with enterprise telemetry and version control systems.",
       "Deployed the containerized application to Amazon EKS using Spinnaker, implementing standard unit tests to verify core agent logic.",
       "Won 1st Place at the JPMC Global Hackathon (Chicago), and concurrently developed a full-stack web app (React, Java/Spring Boot) during an AI Challenge initiative focused on the effective leverage and proper use of AI tools."
     ]
