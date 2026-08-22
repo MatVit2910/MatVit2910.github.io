@@ -21,7 +21,7 @@ const InkCanvas = ({ isHome }) => {
     let height = (canvas.height = window.innerHeight);
     
     const getBaseX = () => isHomeRef.current ? (width < 768 ? width * 0.5 : width * 0.75) : width * 0.5;
-    const getBaseY = () => isHomeRef.current ? (width < 768 ? height - 230 : height / 2) : height / 2;
+    const getBaseY = () => isHomeRef.current ? (width < 768 ? height * 0.72 : height / 2) : height / 2;
 
     const initialBaseX = getBaseX();
     let mouseX = initialBaseX;

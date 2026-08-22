@@ -18,7 +18,7 @@ const Skills = () => {
             <h3 className="skill-panel-title">{cat.title}</h3>
             <div className="skill-badges">
               {cat.skills.map((skill, i) => (
-                <span key={i} className="badge" style={{ fontSize: '0.85rem' }}>{skill}</span>
+                <span key={i} className="badge badge-skill">{skill}</span>
               ))}
             </div>
           </div>
@@ -30,7 +30,7 @@ const Skills = () => {
             <h4 className="education-degree">University of Illinois Chicago</h4>
             <p className="education-detail">B.S. in Computer Science • May 2027</p>
             <div className="flex items-center gap-2 education-gpa">
-              <strong>GPA:</strong> <span style={{ fontFamily: 'var(--font-mono)' }}>4.0 / 4.0</span>
+              <strong>GPA:</strong> <span className="mono-text">4.0 / 4.0</span>
             </div>
             <div className="education-awards">
               <strong>Awards:</strong> Dean's List, Remarkable Futures Scholarship

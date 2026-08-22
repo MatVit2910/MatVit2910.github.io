@@ -38,7 +38,7 @@ const Projects = () => {
               <span className="card-date">{project.date}</span>
             </div>
             <h3 className="card-title">{project.title}</h3>
-            <p className="card-description" style={{ marginBottom: '2rem' }}>{project.description}</p>
+            <p className="card-description card-description-spaced">{project.description}</p>
             <div className="tech-badges">
               {project.tech.map((tech, i) => (
                 <span key={i} className="badge">{tech}</span>

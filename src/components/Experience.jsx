@@ -14,7 +14,7 @@ const experiences = [
     ]
   },
   {
-    company: "Tech In Residence - AbbVie",
+    company: "AbbVie",
     role: "SWE Student Participant",
     date: "January 2026 - May 2026",
     location: "Chicago, IL",

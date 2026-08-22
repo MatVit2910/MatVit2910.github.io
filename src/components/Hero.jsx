@@ -4,7 +4,7 @@ import { GithubIcon, LinkedinIcon } from './Icons';
 const Hero = () => {
   return (
     <section className="hero-section">
-      <div className="container" style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+      <div className="container hero-container">
         <div className="hero-content">
           <h1 className="hero-name">
             Mateo Viteri
@@ -22,9 +22,12 @@ const Hero = () => {
             <a href="/Mateo_Viteri_Resume.pdf" target="_blank" rel="noreferrer" className="btn btn-primary">
               <FileText size={18} /> Resume
             </a>
-            <a href="mailto:mateoviteri13579@gmail.com" className="btn btn-secondary">
-              <Mail size={18} /> Get In Touch
-            </a>
+            <span className="tooltip-wrapper">
+              <a href="mailto:mateoviteri13579@gmail.com" className="btn btn-secondary">
+                <Mail size={18} /> Get In Touch
+              </a>
+              <span className="tooltip-text">mateoviteri13579@gmail.com</span>
+            </span>
             <a href="https://github.com/MatVit2910" target="_blank" rel="noreferrer" className="btn btn-secondary">
               <GithubIcon size={18} /> GitHub
             </a>
